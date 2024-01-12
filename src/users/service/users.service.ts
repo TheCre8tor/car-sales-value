@@ -36,5 +36,11 @@ export class UsersService {
     this.repository.save(user);
   }
 
-  remove() {}
+  async remove(id: number): Promise<User> {
+    const user = await this.findOne(id);
+
+    if (!user) throw new Error('user not founc');
+
+    return await this.repository.remove(user);
+  }
 }
