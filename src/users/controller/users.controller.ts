@@ -8,6 +8,6 @@ export class UsersController {
 
   @Post('/signup')
   async createUser(@Body() body: CreateUserDto) {
-    return await this.service.create(body.email, body.password);
+    await this.service.create(body.email, body.password);
   }
 }

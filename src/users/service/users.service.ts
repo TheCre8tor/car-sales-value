@@ -15,4 +15,26 @@ export class UsersService {
     const user = this.repository.create({ email, password });
     return await this.repository.save(user);
   }
+
+  async findOne(id: number) {
+    return await this.repository.findOneBy({ id });
+  }
+
+  async find(email: string) {
+    return await this.repository.find({ where: { email } });
+  }
+
+  async update(id: number, attrs: Partial<User>) {
+    const user = await this.findOne(id);
+
+    if (!user) throw new Error('user not found');
+
+    // this object copy the differences in the data
+    // of attrs into the user object
+    Object.assign(user, attrs);
+
+    this.repository.save(user);
+  }
+
+  remove() {}
 }
