@@ -17,13 +17,7 @@ export class UsersService {
   }
 
   async findOne(id: number) {
-    const user = await this.repository.findOneBy({ id });
-
-    if (!user) {
-      throw new NotFoundException(`user with the id: ${id} not found`, {});
-    }
-
-    return user;
+    return await this.repository.findOneBy({ id });
   }
 
   async find(email: string) {
@@ -33,7 +27,7 @@ export class UsersService {
   async update(id: number, attrs: Partial<User>) {
     const user = await this.findOne(id);
 
-    if (!user) throw new Error('user not found');
+    if (!user) throw new NotFoundException('user not found');
 
     // this object copy the differences in the data
     // of attrs into the user object
@@ -45,7 +39,7 @@ export class UsersService {
   async remove(id: number): Promise<User> {
     const user = await this.findOne(id);
 
-    if (!user) throw new Error('user not founc');
+    if (!user) throw new NotFoundException('user not found');
 
     return await this.repository.remove(user);
   }
