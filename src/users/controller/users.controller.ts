@@ -8,13 +8,15 @@ import {
   Query,
   Delete,
   NotFoundException,
-  UseInterceptors,
-  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import CreateUserDto from '../dtos/create-user.dto';
 import { UsersService } from '../service/users.service';
 import UpdateUserDto from '../dtos/update-user.dto';
+import UserDto from '../dtos/user.dto';
+import { User } from '../entity/user.entity';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
 
+@Serialize(UserDto) // controller wide serialization ->
 @Controller('auth')
 export class UsersController {
   constructor(private readonly service: UsersService) {}
@@ -28,9 +30,11 @@ export class UsersController {
 
   // 2. read ->
 
-  @UseInterceptors(ClassSerializerInterceptor)
+  // # handler/route serialization
+  // @Serialize(UserDto)
   @Get('/:id')
-  async findUser(@Param('id') id: string) {
+  async findUser(@Param('id') id: string): Promise<User> {
+    console.log('handler is running');
     const user = await this.service.findOne(parseInt(id));
 
     const message = `user with the id: ${id} not found`;
@@ -39,9 +43,8 @@ export class UsersController {
     return user;
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  async findAllUsers(@Query('email') email: string) {
+  async findAllUsers(@Query('email') email: string): Promise<User[]> {
     return await this.service.find(email);
   }
 
