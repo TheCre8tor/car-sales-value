@@ -8,26 +8,21 @@ import {
   Query,
   Delete,
   NotFoundException,
-  UseInterceptors,
 } from '@nestjs/common';
-import CreateUserDto from '../dtos/create-user.dto';
 import { UsersService } from '../service/users.service';
 import UpdateUserDto from '../dtos/update-user.dto';
 import UserDto from '../dtos/user.dto';
 import { User } from '../entity/user.entity';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
-import CurrentUserInterceptor from '../interceptors/current-user.interceptor';
 import CurrentUser from '../decorators/current-user.decorator';
 
 @Serialize(UserDto) // controller wide serialization ->
 @Controller('user')
-@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(private readonly service: UsersService) {}
 
   @Get('/whoami')
   whoAmI(@CurrentUser() user: User) {
-    console.log(`Current User: ${user}`);
     return user;
   }
 
