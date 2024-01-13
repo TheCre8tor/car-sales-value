@@ -8,6 +8,7 @@ import { User } from 'src/users/entity/user.entity';
 import { Report } from 'src/reports/entity/report.entity';
 import { AuthModule } from 'src/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           database: config.get<string>('DB_NAME'),
           entities: [User, Report],
           synchronize: true,
+          namingStrategy: new SnakeNamingStrategy(),
         };
       },
     }),

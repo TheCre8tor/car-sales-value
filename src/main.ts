@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app/app.module';
-import AuthGuard from './auth/guard/auth.guard';
 const cookieSession = require('cookie-session');
 
 async function bootstrap() {

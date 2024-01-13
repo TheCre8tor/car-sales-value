@@ -11,7 +11,7 @@ import { Report } from 'src/reports/entity/report.entity';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()
