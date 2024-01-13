@@ -1,20 +1,10 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Get,
-  NotFoundException,
-  Post,
-  Session,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Post, Session } from '@nestjs/common';
 import { AuthService } from '../service/auth.service';
 import CreateUserDto from 'src/users/dtos/create-user.dto';
 import SigninDto from '../dto/signin.dto';
 import { User } from 'src/users/entity/user.entity';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import UserDto from 'src/users/dtos/user.dto';
-import { UsersService } from 'src/users/service/users.service';
 
 @Serialize(UserDto)
 @Controller('auth')

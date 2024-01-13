@@ -1,6 +1,5 @@
 import {
   Controller,
-  Post,
   Body,
   Get,
   Patch,
@@ -8,6 +7,7 @@ import {
   Query,
   Delete,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from '../service/users.service';
 import UpdateUserDto from '../dtos/update-user.dto';
@@ -15,26 +15,18 @@ import UserDto from '../dtos/user.dto';
 import { User } from '../entity/user.entity';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import CurrentUser from '../decorators/current-user.decorator';
+import AuthGuard from 'src/auth/guard/auth.guard';
 
 @Serialize(UserDto) // controller wide serialization ->
 @Controller('user')
 export class UsersController {
   constructor(private readonly service: UsersService) {}
 
+  @UseGuards(AuthGuard)
   @Get('/whoami')
   whoAmI(@CurrentUser() user: User) {
     return user;
   }
-
-  // @Get('/whoami')
-  // async whoAmI(@Session() session: any) {
-  //   const user = await this.userService.findOne(session.userId);
-
-  //   const message = 'User cannot be identified, please signin again';
-  //   if (!user) throw new NotFoundException(message);
-
-  //   return user;
-  // }
 
   // # handler/route serialization
   // @Serialize(UserDto)
