@@ -1,4 +1,11 @@
-import { IsNumber, IsString } from 'class-validator';
+import {
+  IsLatitude,
+  IsLongitude,
+  IsNumber,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 
 class CreateReportDto {
   @IsNumber()
@@ -11,14 +18,20 @@ class CreateReportDto {
   model: string;
 
   @IsNumber()
+  @Min(1930)
+  @Max(2050)
   year: number;
 
   @IsNumber()
+  @Min(0)
+  @Max(1000000)
   lng: number;
 
-  @IsNumber()
+  @IsLatitude()
   lat: number;
 
-  @IsNumber()
+  @IsLongitude()
   mileage: number;
 }
+
+export default CreateReportDto;
