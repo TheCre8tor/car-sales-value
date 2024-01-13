@@ -7,14 +7,18 @@ import {
 
 import { Observable, map } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
-import UserDto from 'src/users/dtos/user.dto';
 
-export function Serialize(dto: any) {
+// this interface define the blueprint of any class
+interface ClassConstructor {
+  new (...args: any[]): {};
+}
+
+export function Serialize(dto: ClassConstructor) {
   return UseInterceptors(new SerializeInterceptor(dto));
 }
 
 class SerializeInterceptor implements NestInterceptor {
-  constructor(private readonly dto: any) {}
+  constructor(private readonly dto: ClassConstructor) {}
 
   intercept(
     context: ExecutionContext,
@@ -23,7 +27,7 @@ class SerializeInterceptor implements NestInterceptor {
     // Run something before a request is handled
     // by the request handler
 
-    // ---- END ----
+    // ---- END ---->
 
     return next.handle().pipe(
       map((data: any) => {

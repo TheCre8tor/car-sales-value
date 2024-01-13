@@ -6,6 +6,7 @@ import { UsersModule } from 'src/users/users.module';
 import { ReportsModule } from 'src/reports/reports.module';
 import { User } from 'src/users/entity/user.entity';
 import { Report } from 'src/reports/entity/report.entity';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { Report } from 'src/reports/entity/report.entity';
       synchronize: true,
     }),
     UsersModule,
+    AuthModule,
     ReportsModule,
   ],
   controllers: [AppController],

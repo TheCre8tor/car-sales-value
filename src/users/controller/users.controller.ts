@@ -17,24 +17,14 @@ import { User } from '../entity/user.entity';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 
 @Serialize(UserDto) // controller wide serialization ->
-@Controller('auth')
+@Controller('user')
 export class UsersController {
   constructor(private readonly service: UsersService) {}
-
-  // 1. create ->
-
-  @Post('/signup')
-  async createUser(@Body() body: CreateUserDto) {
-    await this.service.create(body.email, body.password);
-  }
-
-  // 2. read ->
 
   // # handler/route serialization
   // @Serialize(UserDto)
   @Get('/:id')
   async findUser(@Param('id') id: string): Promise<User> {
-    console.log('handler is running');
     const user = await this.service.findOne(parseInt(id));
 
     const message = `user with the id: ${id} not found`;
@@ -48,14 +38,10 @@ export class UsersController {
     return await this.service.find(email);
   }
 
-  // 3. update ->
-
   @Patch('/:id')
   async updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
     return this.service.update(parseInt(id), body);
   }
-
-  // 4. delete ->
 
   @Delete('/:id')
   async deleteUser(@Param('id') id: string) {

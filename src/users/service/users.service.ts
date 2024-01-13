@@ -20,6 +20,10 @@ export class UsersService {
     return await this.repository.findOneBy({ id });
   }
 
+  async findOneByEmail(email: string) {
+    return await this.repository.findOneBy({ email });
+  }
+
   async find(email: string) {
     return await this.repository.find({ where: { email } });
   }
