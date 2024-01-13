@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Session } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Post,
+  Session,
+} from '@nestjs/common';
 import { AuthService } from '../service/auth.service';
 import CreateUserDto from 'src/users/dtos/create-user.dto';
 import SigninDto from '../dto/signin.dto';
@@ -37,6 +45,16 @@ export class AuthController {
 
   @Get('/whoami')
   async whoAmI(@Session() session: any) {
-    return await this.userService.findOne(session.userId);
+    const user = await this.userService.findOne(session.userId);
+
+    const message = 'User cannot be identified, please signin again';
+    if (!user) throw new NotFoundException(message);
+
+    return user;
+  }
+
+  @Post('/signout')
+  signout(@Session() session: any) {
+    session.userId = null;
   }
 }
