@@ -8,16 +8,14 @@ import {
   Min,
 } from 'class-validator';
 
-class CreateReportDto {
-  @IsNumber()
-  price: number;
-
+class GetEstimateDto {
   @IsString()
   make: string;
 
   @IsString()
   model: string;
 
+  @Transform(({ value }) => parseInt(value))
   @IsNumber()
   @Min(1930)
   @Max(2050)
@@ -31,10 +29,11 @@ class CreateReportDto {
   @IsLatitude()
   lat: number;
 
+  @Transform(({ value }) => parseInt(value))
   @IsNumber()
   @Min(0)
   @Max(1000000)
   mileage: number;
 }
 
-export default CreateReportDto;
+export default GetEstimateDto;
