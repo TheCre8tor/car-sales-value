@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app/app.module';
+import CurrentUserMiddleware from './users/middlewares/current-user.middleware';
 const cookieSession = require('cookie-session');
 
 async function bootstrap() {
