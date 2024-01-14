@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { UsersService } from '../service/users.service';
+import RequestSession from '../models/request.session';
 
 @Injectable()
 class CurrentUserInterceptor implements NestInterceptor {
@@ -15,7 +16,7 @@ class CurrentUserInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<any>,
   ): Promise<Observable<any>> {
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<RequestSession>();
     const { userId } = request.session || {};
 
     if (userId) {
