@@ -32,7 +32,7 @@ export class UsersController {
   // @Serialize(UserDto)
   @Get('/:id')
   async findUser(@Param('id') id: string): Promise<User> {
-    const user = await this.service.findOne(parseInt(id));
+    const user = await this.service.findOne(id);
 
     const message = `user with the id: ${id} not found`;
     if (!user) throw new NotFoundException(message);
@@ -47,11 +47,11 @@ export class UsersController {
 
   @Patch('/:id')
   async updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
-    return this.service.update(parseInt(id), body);
+    return this.service.update(id, body);
   }
 
   @Delete('/:id')
   async deleteUser(@Param('id') id: string) {
-    return await this.service.remove(parseInt(id));
+    return await this.service.remove(id);
   }
 }

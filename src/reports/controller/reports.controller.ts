@@ -23,13 +23,15 @@ export class ReportsController {
   @Post()
   @UseGuards(AuthGuard)
   @Serialize(ReportDto)
-  createReport(
+  async createReport(
     @Body() body: CreateReportDto,
     @CurrentUser() user: User,
   ): Promise<Report> {
-    return this.service.create(body, user);
+    return await this.service.create(body, user);
   }
 
   @Patch('/:id')
-  approveReport(@Param('id') id: string, @Body() body: ApproveReportDto) {}
+  async approveReport(@Param('id') id: string, @Body() body: ApproveReportDto) {
+    return await this.service.changeApproval(id, body.approved);
+  }
 }

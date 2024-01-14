@@ -4,9 +4,9 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 @Entity()
 export class Report {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
-  @Column({ default: false })
+  @Column('boolean', { default: false })
   approved: boolean;
 
   @Column()

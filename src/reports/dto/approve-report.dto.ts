@@ -2,7 +2,7 @@ import { IsBoolean } from 'class-validator';
 
 class ApproveReportDto {
   @IsBoolean()
-  approve: boolean;
+  approved: boolean;
 }
 
 export default ApproveReportDto;

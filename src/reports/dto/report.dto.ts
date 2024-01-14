@@ -3,7 +3,10 @@ import { Report } from '../entity/report.entity';
 
 class ReportDto {
   @Expose()
-  id: number;
+  id: string;
+
+  @Expose()
+  approved: boolean;
 
   @Expose()
   price: number;
